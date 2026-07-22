@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { OnboardingModal } from "@/components/OnboardingModal";
 import { InitDbModal } from "@/components/InitDbModal";
@@ -41,9 +42,7 @@ export default function LandingPage() {
         />
       )}
 
-      <footer className="border-t border-slate-800/60 py-6 text-center text-xs text-slate-600">
-        SequelFlow © 2026 — Éditeur & Visualiseur SQL Interactif
-      </footer>
+      <Footer/>
     </div>
   );
 }
