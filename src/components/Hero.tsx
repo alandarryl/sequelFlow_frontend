@@ -1,12 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { Sparkles, PlusCircle, ArrowRight, BookOpen, Layers } from "lucide-react";
 
-interface HeroProps {
-  onStartProject: () => void;
-}
-
-export function Hero({ onStartProject }: HeroProps) {
+// 1. On retire l'interface "HeroProps" qui ne sert plus
+export function Hero() { // 2. On enlève { onStartProject } des paramètres
   return (
     <section className="flex-1 flex flex-col items-center justify-center px-6 relative overflow-hidden my-12">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
@@ -26,14 +24,14 @@ export function Hero({ onStartProject }: HeroProps) {
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-          <button
-            onClick={onStartProject}
+          <Link
+            href="/onboarding" 
             className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold bg-blue-600 hover:bg-blue-500 text-white rounded-xl shadow-xl shadow-blue-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <PlusCircle className="w-5 h-5" />
             Créer un projet
             <ArrowRight className="w-4 h-4 ml-1" />
-          </button>
+          </Link>
 
           <button
             onClick={() => alert("Redirection vers les tutoriels...")}
