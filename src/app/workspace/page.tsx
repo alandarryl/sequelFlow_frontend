@@ -8,20 +8,17 @@ import { CanvasWorkspace } from "@/components/CanvasWorkspace";
 import { BottomToolbar } from "@/components/BottomToolbar";
 import { TableInspector } from "@/components/TableInspector";
 import { PresetSelector } from "@/components/PresetSelector";
+import { ConsoleLogs } from "@/components/ConsoleLogs"; // 👈 1. Import
 
 export default function WorkspacePage() {
-  // Récupération des données et fonctions du moteur SQL
-  const { tables, relations, executeCommand, resetWorkspace } = useSqlEngine();
+  // 👈 2. Récupère logs depuis useSqlEngine
+  const { tables, relations, logs, executeCommand, resetWorkspace } = useSqlEngine();
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 
-  // Retrouver l'objet table sélectionné pour l'inspecteur
   const selectedTable = tables.find((t) => t.id === selectedTableId) || null;
 
-  // Fonction pour charger un preset d'exemple
   const handleLoadPreset = (commands: string[]) => {
-    resetWorkspace(); // Réinitialise les tables et relations
-    
-    // Exécute les commandes du preset l'une après l'autre
+    resetWorkspace();
     commands.forEach((cmd) => {
       executeCommand(cmd);
     });
@@ -46,7 +43,6 @@ export default function WorkspacePage() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-3">
-          {/* Sélecteur de Presets d'exemples */}
           <PresetSelector onLoadPreset={handleLoadPreset} />
 
           <Link
@@ -73,6 +69,9 @@ export default function WorkspacePage() {
         onClose={() => setSelectedTableId(null)}
         onExecuteCommand={executeCommand}
       />
+
+      {/* 👈 3. Console d'historique des requêtes */}
+      <ConsoleLogs logs={logs} onExecuteCommand={executeCommand} />
 
       {/* Barre de commande du bas */}
       <BottomToolbar onExecuteCommand={executeCommand} />

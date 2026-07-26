@@ -1,15 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, PlusCircle, ArrowRight, BookOpen, Layers } from "lucide-react";
+import { Sparkles, PlusCircle, ArrowRight, BookOpen, Database, ArrowRightLeft } from "lucide-react";
 
-// 1. On retire l'interface "HeroProps" qui ne sert plus
-export function Hero() { // 2. On enlève { onStartProject } des paramètres
+export function Hero() {
   return (
     <section className="flex-1 flex flex-col items-center justify-center px-6 relative overflow-hidden my-12">
+      {/* Glow Effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
       
-      <div className="max-w-4xl text-center space-y-8 relative z-10">
+      <div className="max-w-5xl text-center space-y-8 relative z-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-xs font-medium text-slate-300 backdrop-blur-sm">
           <Sparkles className="w-3.5 h-3.5 text-blue-400" />
           <span>L'éditeur graphique SQL pensé comme Figma</span>
@@ -42,17 +42,74 @@ export function Hero() { // 2. On enlève { onStartProject } des paramètres
           </Link>
         </div>
 
-        <div className="pt-12">
+        {/* --- APERÇU DU CANVAS (Mockup React / CSS) --- */}
+        <div className="pt-8">
           <div className="p-3 bg-slate-900/60 border border-slate-800/80 rounded-2xl shadow-2xl backdrop-blur-xl">
-            <div className="aspect-video w-full rounded-xl bg-[#090b11] border border-slate-800/50 flex flex-col items-center justify-center gap-3 relative overflow-hidden group">
-              <div className="p-4 bg-slate-900/80 rounded-full border border-slate-800 text-slate-500 group-hover:scale-110 group-hover:text-blue-400 transition">
-                <Layers className="w-8 h-8" />
+            <div className="h-[380px] w-full rounded-xl bg-[#090b11] border border-slate-800/50 relative overflow-hidden flex items-center justify-center bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]">
+              
+              {/* Carte Table 1 : users */}
+              <div className="absolute top-12 left-12 md:left-24 w-52 bg-[#121520] border border-blue-500/40 rounded-xl p-3 shadow-2xl text-left space-y-2 transform -rotate-1 hover:rotate-0 transition duration-300">
+                <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
+                  <Database className="w-4 h-4 text-blue-400" />
+                  <span className="text-xs font-bold text-white font-mono">users</span>
+                </div>
+                <div className="space-y-1 font-mono text-[11px]">
+                  <div className="flex justify-between text-slate-300">
+                    <span className="text-blue-400">id</span>
+                    <span className="text-slate-500">INT PK</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>name</span>
+                    <span className="text-slate-500">VARCHAR</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>email</span>
+                    <span className="text-slate-500">VARCHAR</span>
+                  </div>
+                </div>
               </div>
-              <p className="text-slate-400 text-sm font-medium">Aperçu du Canvas Infini SequelFlow</p>
-              <span className="text-xs text-slate-600">Cliquez sur "Créer un projet" pour lancer l'expérience</span>
+
+              {/* Ligne de connexion SVG avec point animé */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none stroke-blue-500/60" strokeWidth="2">
+                <path d="M 260 110 C 350 110, 350 220, 440 220" fill="none" strokeDasharray="4 4" />
+                <circle cx="350" cy="165" r="4" className="fill-blue-400 animate-ping" />
+              </svg>
+
+              {/* Carte Table 2 : orders */}
+              <div className="absolute bottom-12 right-12 md:right-24 w-56 bg-[#121520] border border-indigo-500/40 rounded-xl p-3 shadow-2xl text-left space-y-2 transform rotate-1 hover:rotate-0 transition duration-300">
+                <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
+                  <Database className="w-4 h-4 text-indigo-400" />
+                  <span className="text-xs font-bold text-white font-mono">orders</span>
+                </div>
+                <div className="space-y-1 font-mono text-[11px]">
+                  <div className="flex justify-between text-slate-300">
+                    <span className="text-indigo-400">id</span>
+                    <span className="text-slate-500">INT PK</span>
+                  </div>
+                  <div className="flex justify-between text-indigo-300 font-semibold bg-blue-500/10 px-1 rounded">
+                    <span>user_id</span>
+                    <span className="text-blue-400">FK</span>
+                  </div>
+                  <div className="flex justify-between text-slate-400">
+                    <span>total</span>
+                    <span className="text-slate-500">DECIMAL</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Overlay interactif au survol */}
+              <Link 
+                href="/workspace"
+                className="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] opacity-0 hover:opacity-100 transition duration-300 flex items-center justify-center gap-2 text-white font-semibold text-sm"
+              >
+                <span>Ouvrir l'expérience interactive</span>
+                <ArrowRightLeft className="w-4 h-4 text-blue-400" />
+              </Link>
+
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
