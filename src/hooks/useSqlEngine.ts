@@ -52,6 +52,12 @@ export function useSqlEngine(initialTables: TableSchema[] = []) {
     setRelations(newRelations);
   };
 
+  // 👈 Fonction pour réinitialiser les tables et relations
+  const resetWorkspace = () => {
+    setTables([]);
+    setRelations([]);
+  };
+
   const executeCommand = (rawCommand: string): EngineResponse => {
     const command = rawCommand.trim().replace(/;$/, "");
     if (!command) {
@@ -200,7 +206,9 @@ export function useSqlEngine(initialTables: TableSchema[] = []) {
       }
 
       // Action: Supprimer la table de l'état
-      setTables((prev) => prev.filter((t) => t.name.toLowerCase() !== tableName.toLowerCase()));
+      const updatedTables = tables.filter((t) => t.name.toLowerCase() !== tableName.toLowerCase());
+      setTables(updatedTables);
+      detectRelations(updatedTables);
 
       return { success: true, message: `Table "${tableName}" supprimée avec succès.` };
     }
@@ -213,7 +221,9 @@ export function useSqlEngine(initialTables: TableSchema[] = []) {
 
   return {
     tables,
-    relations, // Export des relations
+    relations,
     executeCommand,
+    resetWorkspace, // 👈 1. Ajout de resetWorkspace
+    setTables,       // 👈 2. Ajout de setTables
   };
 }

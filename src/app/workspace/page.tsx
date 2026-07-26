@@ -1,19 +1,31 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import { Database, ArrowLeft, BookOpen } from "lucide-react";
 import { useSqlEngine } from "@/hooks/useSqlEngine";
 import { CanvasWorkspace } from "@/components/CanvasWorkspace";
 import { BottomToolbar } from "@/components/BottomToolbar";
-import { TableInspector } from "@/components/TableInspector"; // 👈 Import de l'inspecteur
-import Link from "next/link";
-import { Database, ArrowLeft, BookOpen } from "lucide-react";
-import { useState } from "react";
+import { TableInspector } from "@/components/TableInspector";
+import { PresetSelector } from "@/components/PresetSelector";
 
 export default function WorkspacePage() {
-  const { tables, relations, executeCommand } = useSqlEngine();
+  // Récupération des données et fonctions du moteur SQL
+  const { tables, relations, executeCommand, resetWorkspace } = useSqlEngine();
   const [selectedTableId, setSelectedTableId] = useState<string | null>(null);
 
-  // Retrouver l'objet table sélectionné
+  // Retrouver l'objet table sélectionné pour l'inspecteur
   const selectedTable = tables.find((t) => t.id === selectedTableId) || null;
+
+  // Fonction pour charger un preset d'exemple
+  const handleLoadPreset = (commands: string[]) => {
+    resetWorkspace(); // Réinitialise les tables et relations
+    
+    // Exécute les commandes du preset l'une après l'autre
+    commands.forEach((cmd) => {
+      executeCommand(cmd);
+    });
+  };
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#090b11]">
@@ -32,31 +44,37 @@ export default function WorkspacePage() {
           </div>
         </div>
 
-        <Link
-          href="/docs"
-          className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60 rounded-xl text-xs font-medium transition"
-        >
-          <BookOpen className="w-3.5 h-3.5 text-blue-400" />
-          <span>Documentation</span>
-        </Link>
+        {/* Action Buttons */}
+        <div className="flex items-center gap-3">
+          {/* Sélecteur de Presets d'exemples */}
+          <PresetSelector onLoadPreset={handleLoadPreset} />
+
+          <Link
+            href="/docs"
+            className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60 rounded-xl text-xs font-medium transition"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+            <span>Documentation</span>
+          </Link>
+        </div>
       </header>
 
-      {/* Canvas */}
+      {/* Canvas principal */}
       <CanvasWorkspace
         tables={tables}
         relations={relations}
-        onSelectTable={(table) => setSelectedTableId(table.id)} // 👈 Ouvre l'inspecteur au clic
+        onSelectTable={(table) => setSelectedTableId(table.id)}
         onExecuteCommand={executeCommand}
       />
 
-      {/* Inspecteur de Table latéral (S'ouvre lorsqu'une table est cliquée) */}
+      {/* Inspecteur latéral */}
       <TableInspector
         table={selectedTable}
         onClose={() => setSelectedTableId(null)}
         onExecuteCommand={executeCommand}
       />
 
-      {/* Bottom Console */}
+      {/* Barre de commande du bas */}
       <BottomToolbar onExecuteCommand={executeCommand} />
     </div>
   );
