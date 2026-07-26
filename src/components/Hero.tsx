@@ -33,13 +33,13 @@ export function Hero() { // 2. On enlève { onStartProject } des paramètres
             <ArrowRight className="w-4 h-4 ml-1" />
           </Link>
 
-          <button
-            onClick={() => alert("Redirection vers les tutoriels...")}
+          <Link
+            href="/docs"
             className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 text-base font-semibold bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-800 rounded-xl transition"
           >
             <BookOpen className="w-5 h-5 text-slate-400" />
             Apprendre le SQL
-          </button>
+          </Link>
         </div>
 
         <div className="pt-12">

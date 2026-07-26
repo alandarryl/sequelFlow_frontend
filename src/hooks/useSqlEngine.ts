@@ -180,6 +180,31 @@ export function useSqlEngine(initialTables: TableSchema[] = []) {
       return { success: true, message: `Colonne "${columnName}" ajoutée à "${tableName}".` };
     }
 
+    // -------------------------------------------------------------
+    // 4. DROP TABLE <name>
+    // -------------------------------------------------------------
+    if (upperCmd.startsWith("DROP TABLE")) {
+      const match = command.match(/^DROP\s+TABLE\s+([a-zA-Z0-9_]+)$/i);
+      if (!match) {
+        return {
+          success: false,
+          message: "Syntaxe incorrecte. Exemple: DROP TABLE users",
+        };
+      }
+
+      const tableName = match[1];
+      const exists = tables.some((t) => t.name.toLowerCase() === tableName.toLowerCase());
+
+      if (!exists) {
+        return { success: false, message: `La table "${tableName}" n'existe pas.` };
+      }
+
+      // Action: Supprimer la table de l'état
+      setTables((prev) => prev.filter((t) => t.name.toLowerCase() !== tableName.toLowerCase()));
+
+      return { success: true, message: `Table "${tableName}" supprimée avec succès.` };
+    }
+
     return {
       success: false,
       message: `Commande non reconnue : "${command}"`,

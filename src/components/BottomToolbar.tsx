@@ -1,68 +1,48 @@
 "use client";
 
 import { useState } from "react";
-import { Play, Terminal } from "lucide-react";
-import { EngineResponse } from "@/hooks/useSqlEngine";
+import { Terminal, Send } from "lucide-react";
 
 interface BottomToolbarProps {
-  onExecute: (sql: string) => EngineResponse;
+  onExecuteCommand: (sql: string) => void; // 👈 Nom exact de la prop
 }
 
-export function BottomToolbar({ onExecute }: BottomToolbarProps) {
-  const [inputCommand, setInputCommand] = useState("");
-  const [feedback, setFeedback] = useState<EngineResponse | null>(null);
+export function BottomToolbar({ onExecuteCommand }: BottomToolbarProps) {
+  const [command, setCommand] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputCommand.trim()) return;
+    if (!command.trim()) return;
 
-    // Execute via custom hook
-    const res = onExecute(inputCommand);
-    setFeedback(res);
-
-    if (res.success) {
-      setInputCommand(""); // Clear on success
+    // On vérifie que la fonction existe avant de l'appeler pour éviter le crash
+    if (typeof onExecuteCommand === "function") {
+      onExecuteCommand(command);
     }
+    setCommand("");
   };
 
   return (
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-2xl px-4 space-y-2">
-      {/* Toast Feedback */}
-      {feedback && (
-        <div
-          className={`px-4 py-2 rounded-xl text-xs font-medium border backdrop-blur-md transition ${
-            feedback.success
-              ? "bg-emerald-950/80 border-emerald-800 text-emerald-300"
-              : "bg-rose-950/80 border-rose-800 text-rose-300"
-          }`}
-        >
-          {feedback.message}
-        </div>
-      )}
-
-      {/* Input Bar */}
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-2xl px-4">
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-3 p-2 bg-[#121520]/95 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur-md"
+        className="bg-[#121520]/90 border border-slate-800 rounded-2xl p-2 shadow-2xl backdrop-blur-xl flex items-center gap-2"
       >
-        <div className="flex items-center gap-2 pl-3 text-slate-500">
-          <Terminal className="w-4 h-4 text-blue-400" />
+        <div className="p-2 text-blue-400 pl-3">
+          <Terminal className="w-5 h-5" />
         </div>
-
         <input
           type="text"
-          value={inputCommand}
-          onChange={(e) => setInputCommand(e.target.value)}
-          placeholder="ex: create table users (id, name, email)..."
-          className="flex-1 bg-transparent border-none text-xs font-mono text-slate-100 placeholder:text-slate-500 focus:outline-none"
+          value={command}
+          onChange={(e) => setCommand(e.target.value)}
+          placeholder="Ex: CREATE TABLE users (id, name, email)..."
+          className="flex-1 bg-transparent border-none text-sm text-white placeholder-slate-500 focus:outline-none font-mono"
         />
-
         <button
           type="submit"
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white text-xs font-semibold rounded-xl shadow-lg shadow-blue-600/20 transition"
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-lg transition flex items-center gap-1.5 shrink-0"
         >
-          <Play className="w-3.5 h-3.5 fill-current" />
-          Exécuter
+          <span>Exécuter</span>
+          <Send className="w-3.5 h-3.5" />
         </button>
       </form>
     </div>

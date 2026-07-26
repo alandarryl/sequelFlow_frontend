@@ -23,13 +23,13 @@ export function Navbar() {
 
         {/* Navigation */}
         <nav className="flex items-center gap-4">
-          <button 
-            onClick={() => alert("Redirection vers la doc...")}
+          <Link
+            href="/docs"
             className="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:text-white transition"
           >
             <BookOpen className="w-4 h-4 text-slate-400" />
             Apprendre le SQL
-          </button>
+          </Link>
 
           <Link
             href="/onboarding"
