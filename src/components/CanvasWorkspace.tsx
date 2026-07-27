@@ -19,7 +19,7 @@ interface CanvasWorkspaceProps {
   tables: TableSchema[];
   relations: TableRelation[];
   onSelectTable: (table: TableSchema) => void;
-  onExecuteCommand: (sql: string) => void; // 👈 1. Ajout de la prop ici
+  onExecuteCommand: (sql: string) => void;
 }
 
 const nodeTypes = { sqlTable: TableNode as any };
@@ -28,7 +28,7 @@ export function CanvasWorkspace({
   tables,
   relations,
   onSelectTable,
-  onExecuteCommand, // 👈 2. Récupération ici
+  onExecuteCommand,
 }: CanvasWorkspaceProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
@@ -47,7 +47,6 @@ export function CanvasWorkspace({
             : { x: (index % 3) * 320 + 100, y: Math.floor(index / 3) * 280 + 100 },
           data: {
             ...table,
-            // 👈 3. Passage de la fonction de suppression au TableNode
             onDelete: (tableName: string) => onExecuteCommand(`DROP TABLE ${tableName}`),
           },
         };
@@ -59,10 +58,8 @@ export function CanvasWorkspace({
   useEffect(() => {
     const newEdges: Edge[] = relations.map((rel) => ({
       id: rel.id,
-      source: rel.source,
-      target: rel.target,
-      sourceHandle: "source",
-      targetHandle: "target",
+      source: rel.sourceTable, // 👈 Correction ici (sourceTable au lieu de source)
+      target: rel.targetTable, // 👈 Correction ici (targetTable au lieu de target)
       animated: true,
       style: { stroke: "#3b82f6", strokeWidth: 2 },
     }));

@@ -17,13 +17,24 @@ export function TableInspector({ table, onClose, onExecuteCommand }: TableInspec
 
   const handleAddRow = (e: React.FormEvent) => {
     e.preventDefault();
-    const values = table.columns.map((col) => {
-      const val = newRowData[col] || "NULL";
-      // Si c'est un nombre, pas de guillemets, sinon guillemets simples
-      return isNaN(Number(val)) ? `'${val}'` : val;
+
+    // 1. Filtrer uniquement les colonnes pour lesquelles une valeur a été saisie
+    const filledCols = table.columns.filter(
+      (col) => newRowData[col] !== undefined && newRowData[col].trim() !== ""
+    );
+
+    if (filledCols.length === 0) return;
+
+    // 2. Formater les valeurs
+    const values = filledCols.map((col) => {
+      const val = newRowData[col].trim();
+      // Si la valeur est un nombre pur, on ne met pas de guillemets
+      return !isNaN(Number(val)) && val !== "" ? val : `'${val}'`;
     });
 
-    const sql = `INSERT INTO ${table.name} VALUES (${values.join(", ")})`;
+    // 3. Générer le SQL au format : INSERT INTO users (col1, col2) VALUES ('val1', 'val2')
+    const sql = `INSERT INTO ${table.name} (${filledCols.join(", ")}) VALUES (${values.join(", ")})`;
+    
     onExecuteCommand(sql);
     setNewRowData({});
   };
@@ -104,7 +115,11 @@ export function TableInspector({ table, onClose, onExecuteCommand }: TableInspec
                     <tr key={rIndex} className="hover:bg-slate-800/30 transition">
                       {table.columns.map((col) => (
                         <td key={col} className="p-2.5 whitespace-nowrap">
-                          {row[col] ?? <span className="text-slate-600">null</span>}
+                          {row[col] !== undefined && row[col] !== null ? (
+                            String(row[col])
+                          ) : (
+                            <span className="text-slate-600">null</span>
+                          )}
                         </td>
                       ))}
                     </tr>
