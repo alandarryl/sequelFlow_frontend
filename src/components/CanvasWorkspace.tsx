@@ -10,6 +10,7 @@ import {
   Edge,
   useNodesState,
   useEdgesState,
+  NodeTypes,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { TableSchema, TableRelation } from "@/hooks/useSqlEngine";
@@ -22,7 +23,7 @@ interface CanvasWorkspaceProps {
   onExecuteCommand: (sql: string) => void;
 }
 
-const nodeTypes = { sqlTable: TableNode as any };
+const nodeTypes: NodeTypes = { sqlTable: TableNode as any };
 
 export function CanvasWorkspace({
   tables,
@@ -33,7 +34,6 @@ export function CanvasWorkspace({
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  // Synchronisation des tables vers les nœuds
   useEffect(() => {
     setNodes((prevNodes) => {
       return tables.map((table, index) => {
@@ -44,7 +44,7 @@ export function CanvasWorkspace({
           type: "sqlTable",
           position: existingNode
             ? existingNode.position
-            : { x: (index % 3) * 320 + 100, y: Math.floor(index / 3) * 280 + 100 },
+            : { x: (index % 3) * 340 + 80, y: Math.floor(index / 3) * 300 + 100 },
           data: {
             ...table,
             onDelete: (tableName: string) => onExecuteCommand(`DROP TABLE ${tableName}`),
@@ -54,20 +54,19 @@ export function CanvasWorkspace({
     });
   }, [tables, setNodes, onExecuteCommand]);
 
-  // Synchronisation des relations (Edges)
   useEffect(() => {
     const newEdges: Edge[] = relations.map((rel) => ({
       id: rel.id,
-      source: rel.sourceTable, // 👈 Correction ici (sourceTable au lieu de source)
-      target: rel.targetTable, // 👈 Correction ici (targetTable au lieu de target)
+      source: rel.sourceTable,
+      target: rel.targetTable,
       animated: true,
-      style: { stroke: "#3b82f6", strokeWidth: 2 },
+      style: { stroke: "#F37023", strokeWidth: 2 },
     }));
     setEdges(newEdges);
   }, [relations, setEdges]);
 
   return (
-    <div className="w-full h-full bg-[#090b11]">
+    <div className="w-full h-full bg-[#FAFAFA]">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -79,10 +78,9 @@ export function CanvasWorkspace({
           if (selected) onSelectTable(selected);
         }}
         fitView
-        colorMode="dark"
       >
-        <Background variant={BackgroundVariant.Dots} gap={24} size={1.5} color="#1e293b" />
-        <Controls className="!bg-[#121520] !border-slate-800 !fill-slate-300" />
+        <Background variant={BackgroundVariant.Dots} gap={20} size={1.2} color="#E5E7EB" />
+        <Controls className="!bg-white !border-gray-200 !rounded-lg shadow-sm !fill-[#111827]" />
       </ReactFlow>
     </div>
   );

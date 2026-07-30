@@ -56,143 +56,166 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090b11] text-slate-200 font-sans selection:bg-blue-500/30">
+    <div className="relative min-h-screen bg-[#FAFAFA] text-[#111827] font-sans selection:bg-[#F37023]/20 overflow-hidden">
+      {/* Logos Fond en Filigrane (MySQL / PostgreSQL) */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* SVG MySQL Filigrane */}
+        <svg
+          className="absolute -top-10 -right-10 w-96 h-96 text-slate-900 opacity-[0.04]"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" />
+        </svg>
+
+        {/* SVG PostgreSQL Filigrane */}
+        <svg
+          className="absolute top-1/2 -left-20 w-[500px] h-[500px] text-slate-900 opacity-[0.03] -translate-y-1/2"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M12 3C6.48 3 2 7.48 2 13c0 3.65 1.95 6.84 4.88 8.58.37.22.84.07 1.04-.3.19-.36.06-.82-.3-1.03C5.08 18.73 3.5 16.03 3.5 13c0-4.69 3.81-8.5 8.5-8.5s8.5 3.81 8.5 8.5c0 3.03-1.58 5.73-4.12 7.25-.36.21-.49.67-.3 1.03.19.37.66.52 1.04.3C20.05 19.84 22 16.65 22 13c0-5.52-4.48-10-10-10z" />
+        </svg>
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#121520]/80 border-b border-slate-800/80 backdrop-blur-md px-6 py-4">
+      <header className="sticky top-0 z-50 bg-white/90 border-b border-gray-200/80 backdrop-blur-md px-6 py-3.5 shadow-sm">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="p-2 hover:bg-slate-800 text-slate-400 hover:text-white rounded-xl transition"
+              className="p-1.5 hover:bg-gray-100 text-[#6B7280] hover:text-[#111827] rounded-lg transition-colors"
+              title="Retour"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
             </Link>
-            <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-xl">
-                <BookOpen className="w-5 h-5" />
+            <div className="h-4 w-px bg-gray-200" />
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 bg-[#F37023]/10 border border-[#F37023]/20 text-[#F37023] rounded-lg">
+                <BookOpen className="w-4 h-4" />
               </div>
               <div>
-                <h1 className="font-bold text-white text-base leading-tight">
+                <h1 className="font-semibold text-[#111827] text-xs leading-tight">
                   Documentation & Guide
                 </h1>
-                <p className="text-xs text-slate-400">SequelFlow Studio</p>
+                <p className="text-[10px] text-[#6B7280]">SequelFlow Studio</p>
               </div>
             </div>
           </div>
 
           <Link
             href="/workspace"
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs rounded-xl shadow-lg shadow-blue-600/20 transition"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#F37023] hover:bg-[#e05f12] text-white font-medium text-xs rounded-lg shadow-sm transition-all duration-150"
           >
-            <Database className="w-4 h-4" />
+            <Database className="w-3.5 h-3.5" />
             <span>Ouvrir le Workspace</span>
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-6 py-10 space-y-12">
+      <main className="relative z-10 max-w-5xl mx-auto px-6 py-8 space-y-10">
         {/* Intro Banner */}
-        <section className="bg-gradient-to-r from-blue-900/30 via-slate-900 to-indigo-900/30 border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-          <div className="max-w-2xl space-y-3 relative z-10">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">
-              <Sparkles className="w-3.5 h-3.5" /> Concept & Utilisation
+        <section className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
+          <div className="max-w-2xl space-y-2.5">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#F37023]/10 border border-[#F37023]/20 text-[#F37023] text-[11px] font-semibold rounded-md">
+              <Sparkles className="w-3 h-3" /> Concept & Utilisation
             </span>
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-xl font-bold text-[#111827] tracking-tight">
               Visualisez vos schémas SQL en temps réel
             </h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <p className="text-xs text-[#6B7280] leading-relaxed">
               SequelFlow est un studio SQL interactif. Écrivez des requêtes SQL standard dans la console pour générer instantanément des diagrammes relationnels animés et inspecter vos jeux de données.
             </p>
           </div>
         </section>
 
         {/* Comment ça marche */}
-        <section className="space-y-6">
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <Layers className="w-5 h-5 text-blue-400" />
+        <section className="space-y-4">
+          <h3 className="text-sm font-bold text-[#111827] flex items-center gap-2 tracking-tight">
+            <Layers className="w-4 h-4 text-[#F37023]" />
             Comment utiliser l'application ?
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-[#121520] border border-slate-800 rounded-2xl p-5 space-y-2">
-              <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-sm">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-2 shadow-sm">
+              <div className="w-7 h-7 rounded-lg bg-[#F37023]/10 border border-[#F37023]/20 text-[#F37023] font-bold flex items-center justify-center text-xs">
                 1
               </div>
-              <h4 className="font-semibold text-white text-sm">Créez des tables</h4>
-              <p className="text-xs text-slate-400">
-                Tapez `CREATE TABLE` dans la barre du bas. Vos tables apparaissent sous forme de cartes déplaçables.
+              <h4 className="font-semibold text-[#111827] text-xs">Créez des tables</h4>
+              <p className="text-xs text-[#6B7280] leading-relaxed">
+                Tapez <code className="font-mono text-[11px] text-[#111827] bg-gray-100 px-1 py-0.5 rounded">CREATE TABLE</code> dans la barre du bas. Vos tables apparaissent sous forme de cartes déplaçables.
               </p>
             </div>
 
-            <div className="bg-[#121520] border border-slate-800 rounded-2xl p-5 space-y-2">
-              <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-sm">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-2 shadow-sm">
+              <div className="w-7 h-7 rounded-lg bg-[#F37023]/10 border border-[#F37023]/20 text-[#F37023] font-bold flex items-center justify-center text-xs">
                 2
               </div>
-              <h4 className="font-semibold text-white text-sm">Liaisons automatiques</h4>
-              <p className="text-xs text-slate-400">
-                Utilisez des conventions de clés étrangères (ex: `user_id`). Une flèche animée reliera automatiquement les tables.
+              <h4 className="font-semibold text-[#111827] text-xs">Liaisons automatiques</h4>
+              <p className="text-xs text-[#6B7280] leading-relaxed">
+                Utilisez des conventions de clés étrangères (ex: <code className="font-mono text-[11px] text-[#111827] bg-gray-100 px-1 py-0.5 rounded">user_id</code>). Une flèche reliera automatiquement les tables.
               </p>
             </div>
 
-            <div className="bg-[#121520] border border-slate-800 rounded-2xl p-5 space-y-2">
-              <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-sm">
+            <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-2 shadow-sm">
+              <div className="w-7 h-7 rounded-lg bg-[#F37023]/10 border border-[#F37023]/20 text-[#F37023] font-bold flex items-center justify-center text-xs">
                 3
               </div>
-              <h4 className="font-semibold text-white text-sm">Inspectez les données</h4>
-              <p className="text-xs text-slate-400">
-                Ajoutez des lignes avec `INSERT INTO` puis cliquez sur n'importe quelle carte pour afficher l'inspecteur latéral.
+              <h4 className="font-semibold text-[#111827] text-xs">Inspectez les données</h4>
+              <p className="text-xs text-[#6B7280] leading-relaxed">
+                Ajoutez des lignes avec <code className="font-mono text-[11px] text-[#111827] bg-gray-100 px-1 py-0.5 rounded">INSERT INTO</code> puis cliquez sur n'importe quelle carte pour afficher l'inspecteur.
               </p>
             </div>
           </div>
         </section>
 
         {/* Commandes SQL */}
-        <section className="space-y-6">
-          <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <Terminal className="w-5 h-5 text-blue-400" />
+        <section className="space-y-4">
+          <h3 className="text-sm font-bold text-[#111827] flex items-center gap-2 tracking-tight">
+            <Terminal className="w-4 h-4 text-[#F37023]" />
             Commandes SQL Supportées
           </h3>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {SQL_COMMANDS.map((item) => (
               <div
                 key={item.cmd}
-                className="bg-[#121520] border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition"
+                className="bg-white border border-gray-200 rounded-xl p-4 space-y-3 shadow-sm hover:border-gray-300 transition-colors"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="font-mono text-xs font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-lg">
+                    <span className="font-mono text-xs font-bold text-[#F37023] bg-[#F37023]/10 border border-[#F37023]/20 px-2 py-0.5 rounded-md">
                       {item.cmd}
                     </span>
-                    <p className="mt-2 text-sm text-slate-300 font-medium">
+                    <p className="mt-2 text-xs text-[#111827] font-medium">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <span className="text-[10px] font-semibold uppercase text-slate-500">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-semibold uppercase text-[#6B7280]">
                     Syntaxe
                   </span>
-                  <div className="bg-[#090b11] border border-slate-800/80 rounded-xl px-3.5 py-2 font-mono text-xs text-slate-300">
+                  <div className="bg-[#FAFAFA] border border-gray-200 rounded-lg px-3 py-1.5 font-mono text-xs text-[#111827]">
                     {item.syntax}
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <span className="text-[10px] font-semibold uppercase text-slate-500">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-semibold uppercase text-[#6B7280]">
                     Exemple à exécuter
                   </span>
-                  <div className="flex items-center justify-between bg-[#090b11] border border-slate-800/80 rounded-xl px-3.5 py-2 font-mono text-xs text-emerald-400">
-                    <span>{item.example}</span>
+                  <div className="flex items-center justify-between bg-[#FAFAFA] border border-gray-200 rounded-lg px-3 py-1.5 font-mono text-xs text-[#111827]">
+                    <span className="truncate">{item.example}</span>
                     <button
                       onClick={() => copyToClipboard(item.example)}
-                      className="p-1 text-slate-500 hover:text-slate-300 rounded-lg transition"
+                      className="p-1 text-[#6B7280] hover:text-[#111827] hover:bg-gray-200/60 rounded transition-colors shrink-0"
                       title="Copier l'exemple"
                     >
                       {copiedText === item.example ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
                       ) : (
                         <Copy className="w-3.5 h-3.5" />
                       )}
@@ -201,7 +224,7 @@ export default function DocsPage() {
                 </div>
 
                 {item.notes && (
-                  <p className="text-xs text-slate-500 italic">💡 {item.notes}</p>
+                  <p className="text-[11px] text-[#6B7280] italic">💡 {item.notes}</p>
                 )}
               </div>
             ))}
@@ -209,15 +232,15 @@ export default function DocsPage() {
         </section>
 
         {/* Astuce de relation automatique */}
-        <section className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-3">
-          <div className="flex items-center gap-2 text-amber-400 text-sm font-semibold">
+        <section className="bg-white border border-gray-200 rounded-xl p-4 space-y-2 shadow-sm">
+          <div className="flex items-center gap-1.5 text-[#F37023] text-xs font-semibold">
             <Key className="w-4 h-4" />
             <span>Astuce : Détection des relations</span>
           </div>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Pour qu'une liaison animée s'affiche automatiquement entre deux tables, nommez la colonne étrangère au format <code className="text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded">&lt;nom_table_singulier&gt;_id</code>.
+          <p className="text-xs text-[#6B7280] leading-relaxed">
+            Pour qu'une liaison animée s'affiche automatiquement entre deux tables, nommez la colonne étrangère au format <code className="text-[#111827] bg-gray-100 font-mono px-1.5 py-0.5 rounded border border-gray-200">&lt;nom_table_singulier&gt;_id</code>.
             <br />
-            <em>Exemple :</em> Si vous avez une table <code className="text-white">users</code>, ajouter une colonne <code className="text-white">user_id</code> dans une table <code className="text-white">orders</code> créera le lien automatiquement.
+            <em>Exemple :</em> Si vous avez une table <code className="text-[#111827] font-medium">users</code>, ajouter une colonne <code className="text-[#111827] font-medium">user_id</code> dans une table <code className="text-[#111827] font-medium">orders</code> créera le lien automatiquement.
           </p>
         </section>
       </main>
